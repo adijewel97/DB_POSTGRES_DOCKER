@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15 # Ganti dengan versi PostgreSQL yang diinginkan
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: adis # Ganti dengan username PostgreSQL
+      POSTGRES_PASSWORD: adis123 # Ganti dengan password PostgreSQL
+      POSTGRES_DB: postgres_me # Nama database default
+    ports:
+      - "5432:5432" # Mengarahkan port host ke port container
+    volumes:
+      - /var/lib/postgresql/data # Volume untuk data PostgreSQL
+
+  pgadmin:
+    image: dpage/pgadmin4:7 # Ganti dengan versi pgAdmin yang diinginkan
+    container_name: pgadmin_container
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com # Ganti dengan email untuk login pgAdmin
+      PGADMIN_DEFAULT_PASSWORD: admin # Ganti dengan password untuk login pgAdmin
+    ports:
+      - "5050:80" # Port host (5050) diarahkan ke port pgAdmin (80)
+    depends_on:
+      - postgres # pgAdmin akan menunggu PostgreSQL aktif sebelum memulai
